@@ -11,16 +11,16 @@ HOMEPAGE = "http://www.openl2tp.org/"
 SECTION = "console/network"
 LICENSE = "GPLv2+"
 
-SRC_URI = "\
-        https://sourceforge.net/projects/openl2tp/files/${BPN}/${PV}/${BPN}-${PV}.tar.gz \
-        file://ippool_usl_timer.patch \
-        file://ippool_parallel_make_and_pic.patch \
-        file://ippool_init.d.patch \
-        file://always_syslog.patch \
-        file://makefile-add-ldflags.patch \
-        file://runtest.sh \
-        file://ippool.service \
-        "
+SRC_URI = "https://sourceforge.net/projects/openl2tp/files/${BPN}/${PV}/${BPN}-${PV}.tar.gz \
+           file://runtest.sh \
+           file://ippool.service \
+           file://ippool_usl_timer.patch \
+           file://ippool_parallel_make_and_pic.patch \
+           file://ippool_init.d.patch \
+           file://always_syslog.patch \
+           file://makefile-add-ldflags.patch \
+           file://0001-usl_timer-Check-for-return-value-of-write-API.patch \
+           "
 
 LIC_FILES_CHKSUM = "file://LICENSE;md5=4c59283b82fc2b166455e0fc23c71c6f"
 SRC_URI[md5sum] = "e2401e65db26a3764585b97212888fae"
@@ -50,7 +50,7 @@ do_compile_prepend() {
 
     # ignore the OPT_CFLAGS?= in Makefile,
     # it should be in CFLAGS from env
-    export OPT_CFLAGS=
+    export OPT_CFLAGS="${SELECTED_OPTIMIZATION}"
 }
 
 
