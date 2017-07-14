@@ -1,0 +1,29 @@
+diff -uprN netkit-rusers-0.17.orig/rup/rup.c netkit-rusers-0.17/rup/rup.c
+--- netkit-rusers-0.17.orig/rup/rup.c	2017-07-14 13:46:21.030808408 -0400
++++ netkit-rusers-0.17/rup/rup.c	2017-07-14 13:49:01.306808408 -0400
+@@ -58,6 +58,8 @@ static int print_rup_data(const char *ho
+ 
+ static int printtime;			/* print the remote host(s)'s time */
+ static int printseconds;                /* print in seconds, not formatted */
++static struct timeval timeout = { 25, 0 };
++					/* timeout for function "clnt_call"*/
+ 
+ struct host_list {
+ 	struct host_list *next;
+@@ -245,7 +247,6 @@ onehost(const char *host)
+ {
+ 	CLIENT *rstat_clnt;
+ 	statstime host_stat;
+-	struct timeval foo;
+ 	
+ 	rstat_clnt = clnt_create(host, RSTATPROG, RSTATVERS_TIME, "udp");
+ 	if (rstat_clnt == NULL) {
+@@ -257,7 +258,7 @@ onehost(const char *host)
+ 	if (clnt_call(rstat_clnt, RSTATPROC_STATS, 
+ 		      (xdrproc_t) xdr_void, NULL, 
+ 		      (xdrproc_t) xdr_statstime, (char *)&host_stat, 
+-		      foo) != RPC_SUCCESS) 
++		      timeout) != RPC_SUCCESS) 
+ 	{
+ 		warnx("%s",  clnt_sperror(rstat_clnt, host));
+ 		return;

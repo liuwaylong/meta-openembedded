@@ -9,6 +9,7 @@ DEPENDS = " tcp-wrappers libtirpc rpcbind"
 SRC_URI = "http://http.debian.net/debian/pool/main/n/${BPN}/${BPN}_${PV}.orig.tar.gz;name=archive \
            http://http.debian.net/debian/pool/main/n/${BPN}/${BPN}_${PV}-8.diff.gz;name=patch8 \
            file://rpc.rusersd-Makefile-fix-parallel-build-issue.patch \
+           file://rpc.rusersd-rup-fix-clntcall-timeout-issue.patch \
 "
 
 SRC_URI[archive.md5sum] = "dc99a80b9fde2ab427c874f88f1c1602"
